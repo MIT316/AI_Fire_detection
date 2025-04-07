@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>FireGuard AI - Live Annotated Stream</h1>
+        </div>
+        <div class="col-md-4 text-end">
+            <div class="mb-2">Welcome, <strong>{{ username }}</strong>!</div>
+            <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">Logout</a>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Live Fire Detection</h5>
+                    <div class="text-center">
+                        <img src="{{ url_for('video_feed') }}" class="img-fluid" alt="Annotated Stream">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

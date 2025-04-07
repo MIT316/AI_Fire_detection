@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | FireGuard AI{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire Detection System</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+            margin: 20px 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .video-container {
+            margin: 20px 0;
+        }
+        .fire-events {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fire Detection System</h1>
+        
+        <!-- Map Section -->
+        <div id="map"></div>
+        
+        <!-- Video Feed Section -->
+        <div class="video-container">
+            <h2>Live Camera Feed</h2>
+            <img src="{{ url_for('video_feed') }}" width="640" height="480">
+        </div>
+        
+        <!-- Fire Events Section -->
+        <div class="fire-events">
+            <h2>Fire Detection History</h2>
+            <ul>
+                {% for event in fire_events %}
+                <li>{{ event }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Google Maps API -->
+    <script>
+        function initMap() {
+            const location = { lat: {{ latitude }}, lng: {{ longitude }} };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: location,
+            });
+            const marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                title: "Fire Detection Location"
+            });
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key={{ map_api_key }}&callback=initMap">
+    </script>
+</body>
+</html>
+{% endblock %}
